@@ -11,7 +11,11 @@ CREATE TABLE yard (
 CREATE TABLE position(
 	bay INTEGER CHECK (bay >= 0),
 	row INTEGER CHECK (row >= 0),
-	tier INTEGER,
+
+	-- Tier should be limited to the max_tier of category,
+	-- this cannot be enforced without creating a foreign key to a non-minimal primary key
+	-- since category_type is the minimal primary key of category.
+	tier INTEGER CHECK (tier >= 1),
 	code VARCHAR(50) REFERENCES yard(code),
 	PRIMARY KEY (bay, row, tier, code)
 );
