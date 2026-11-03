@@ -1,12 +1,11 @@
 CREATE TABLE category (
 	category_type VARCHAR(50) PRIMARY KEY,
-	max_tier INTEGER NOT NULL CHECK (max_tier >= 1),
+	max_tier INTEGER NOT NULL CHECK (max_tier >= 1)
 );
-
 
 CREATE TABLE yard (
 	code VARCHAR(50) PRIMARY KEY,
-	category_type VARCHAR(50) NOT NULL REFERENCES category(type)
+	category_type VARCHAR(50) NOT NULL REFERENCES category(category_type)
 );
 
 CREATE TABLE position(
@@ -14,7 +13,7 @@ CREATE TABLE position(
 	row INTEGER CHECK (row >= 0),
 	tier INTEGER,
 	code VARCHAR(50) REFERENCES yard(code),
-	PRIMARY KEY (bay, row, tier, code),
+	PRIMARY KEY (bay, row, tier, code)
 );
 
 CREATE TABLE country (
