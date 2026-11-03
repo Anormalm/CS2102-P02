@@ -1,37 +1,20 @@
 CREATE TABLE category (
 	category_type VARCHAR(50) PRIMARY KEY,
 	max_tier INTEGER NOT NULL CHECK (max_tier >= 1),
-
-	UNIQUE (category_type, max_tier)
 );
 
 
 CREATE TABLE yard (
 	code VARCHAR(50) PRIMARY KEY,
-	category_type VARCHAR(50) NOT NULL,
-	max_tier INTEGER NOT NULL,
-
-	FOREIGN KEY (category_type, max_tier)
-		REFERENCES category (category_type, max_tier)
-		DEFERRABLE INITIALLY IMMEDIATE,
-
-	UNIQUE (code, max_tier)
+	category_type VARCHAR(50) NOT NULL REFERENCES category(type)
 );
 
 CREATE TABLE position(
 	bay INTEGER CHECK (bay >= 0),
 	row INTEGER CHECK (row >= 0),
 	tier INTEGER,
-	code VARCHAR(50),
-	max_tier INTEGER NOT NULL,
-
+	code VARCHAR(50) REFERENCES yard(code),
 	PRIMARY KEY (bay, row, tier, code),
-
-	FOREIGN KEY (code, max_tier)
-		REFERENCES yard (code, max_tier)
-		DEFERRABLE INITIALLY IMMEDIATE, 
-
-	CHECK (tier >= 1 AND tier <= max_tier)
 );
 
 CREATE TABLE country (
